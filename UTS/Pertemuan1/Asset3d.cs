@@ -1,4 +1,4 @@
-﻿using LearnOpenTK.Common;
+using LearnOpenTK.Common;
 using OpenTK.Graphics.OpenGL4;
 using OpenTK.Mathematics;
 using System;
@@ -57,7 +57,7 @@ namespace Pertemuan1
             _euler.Add(new Vector3(1, 0, 0));
             _euler.Add(new Vector3(0, 1, 0));
             _euler.Add(new Vector3(0, 0, 1));
-            _euler.Add(new Vector3(0, 0, 1));
+            //_euler.Add(new Vector3(0, 0, 1));
             Child = new List<Asset3d>();
         }
 
@@ -444,7 +444,7 @@ namespace Pertemuan1
             Vector3 temp_vector;
             for (float u = -pi; u <= pi ; u += pi / 300)
             {
-                for (float v = -pi / 2; v <= pi / 2; v += pi / 300)
+                for (float v = 0; v <= pi / 2; v += pi / 300)
                 {
                     temp_vector.X = _x + (float)v * (float)Math.Cos(u) * radius_x;
                     temp_vector.Y = _y + (float)v * (float)Math.Sin(u) * radius_y;
@@ -540,6 +540,57 @@ namespace Pertemuan1
                 k1 = (uint)(i * (sectorCount + 1));
                 k2 = (uint)(k1 + sectorCount + 1);
                 for (int j = 0; j < sectorCount; ++j, ++k1, ++k2)
+                {
+                    if (i != 0)
+                    {
+                        _indices.Add(k1);
+                        _indices.Add(k2);
+                        _indices.Add(k1 + 1);
+                    }
+                    if (i != (stackCount - 1))
+                    {
+                        _indices.Add(k1 + 1);
+                        _indices.Add(k2);
+                        _indices.Add(k2 + 1);
+                    }
+                }
+            }
+        }
+        public void createHalfBall(float radiusX, float radiusY, float radiusZ, 
+            float _x, float _y, float _z, int sectorCount, int stackCount)
+        {
+            float pi = (float)Math.PI;
+            Vector3 temp_vector;
+            float sectorStep = 2 * (float)Math.PI / sectorCount;
+            float stackStep = (float)Math.PI / stackCount;
+            float sectorAngle, StackAngle, x, y, z;
+
+           
+
+            for (int i = 0; i <= stackCount; ++i)
+            {
+                StackAngle = pi / 2 - i * stackStep;
+                x = radiusX * (float)Math.Cos(StackAngle);
+                y = radiusY * (float)Math.Cos(StackAngle);
+                z = radiusZ * (float)Math.Sin(StackAngle);
+
+                for (int j = 0; j <= sectorCount / 2; ++j)
+                {
+                    sectorAngle = j * sectorStep;
+
+                    temp_vector.X = x * (float)Math.Cos(sectorAngle) + _x;
+                    temp_vector.Y = y * (float)Math.Sin(sectorAngle) + _y;
+                    temp_vector.Z = z + _z;
+                    _vertices.Add(temp_vector);
+                }
+            }
+
+            uint k1, k2;
+            for (int i = 0; i < stackCount; ++i)
+            {
+                k1 = (uint)(i * (sectorCount + 1));
+                k2 = (uint)(k1 + sectorCount + 1);
+                for (int j = 0; j < sectorCount / 2; ++j, ++k1, ++k2)
                 {
                     if (i != 0)
                     {
