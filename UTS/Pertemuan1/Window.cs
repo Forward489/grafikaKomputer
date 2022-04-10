@@ -1,4 +1,4 @@
-﻿//using LearnOpenTK.Common;
+//using LearnOpenTK.Common;
 //using OpenTK.Graphics.ES11;
 //using OpenTK.Graphics.OpenGL4;
 //using OpenTK.Windowing.Common;
@@ -131,21 +131,10 @@ namespace Pertemuan1
             main_head.addChildClass(nose);
         }
 
-        protected override void OnLoad()
+        public void makeMustache()
         {
-            base.OnLoad();
-            ////Background 
-            main_head = new Asset3d();
-            Asset3d mustache = new Asset3d();
-            //main_head.createElipseoid(0.5f, 0.45f, 0.4f, 0.5f, 0.5f, 0.5f);
-            main_head.createEllipsoid2(0.5f, 0.45f, 0.5f, 0.0f, 0.0f, 0.0f, 300, 100);
-            main_head.setColor(new Vector3(255.0f, 255.0f, 0.0f));
-
-            makeEyes();
-            makeMouth();
-
+            Asset3d mustache;
             //Right Mustache
-
             mustache = new Asset3d();
             mustache.EllipPara(0.01f / 9f, 0.01f / 9f, 0.004f, -0.52f, -0.12f, 0.1f);
             mustache.setColor(new Vector3(0, 0, 0));
@@ -155,19 +144,18 @@ namespace Pertemuan1
 
             mustache = new Asset3d();
             mustache.EllipPara(0.01f / 9f, 0.01f / 9f, 0.004f, -0.5f, -0.12f, 0.1f);
-            mustache.setColor(new Vector3(0,0,0));
+            mustache.setColor(new Vector3(0, 0, 0));
             mustache.rotate(main_head._center, mustache._euler[1], 90);
             main_head.addChildClass(mustache);
 
             mustache = new Asset3d();
             mustache.EllipPara(0.01f / 9f, 0.01f / 9f, 0.004f, -0.5f, -0.12f, 0.15f);
-            mustache.setColor(new Vector3(0,0,0));
+            mustache.setColor(new Vector3(0, 0, 0));
             mustache.rotate(main_head._center, mustache._euler[1], 90);
             mustache.rotate(main_head._center, mustache._euler[0], 15);
             main_head.addChildClass(mustache);
 
             //Left Mustache
-
             mustache = new Asset3d();
             mustache.EllipPara(0.01f / 9f, 0.01f / 9f, 0.004f, 0.49f, -0.12f, 0.13f);
             mustache.setColor(new Vector3(0, 0, 0));
@@ -177,27 +165,70 @@ namespace Pertemuan1
 
             mustache = new Asset3d();
             mustache.EllipPara(0.01f / 9f, 0.01f / 9f, 0.004f, 0.5f, -0.12f, 0.1f);
-            mustache.setColor(new Vector3(0,0,0));
+            mustache.setColor(new Vector3(0, 0, 0));
             mustache.rotate(main_head._center, mustache._euler[1], -90);
             main_head.addChildClass(mustache);
 
             mustache = new Asset3d();
             mustache.EllipPara(0.01f / 9f, 0.01f / 9f, 0.004f, 0.52f, -0.12f, 0.08f);
-            mustache.setColor(new Vector3(0,0,0));
+            mustache.setColor(new Vector3(0, 0, 0));
             mustache.rotate(main_head._center, mustache._euler[1], -90);
             mustache.rotate(main_head._center, mustache._euler[0], -15);
             main_head.addChildClass(mustache);
 
+            mustache = new Asset3d();
+            mustache.EllipPara(0.01f / 9f, 0.01f / 15f, 0.0014f, 0f, 0.53f, -0.115f);
+            mustache.setColor(new Vector3(0, 0, 0));
+            mustache.rotate(main_head._center, mustache._euler[0], 110);
+            main_head.addChildClass(mustache);
+        }
 
-            //mustache = new Asset3d();
-            //mustache.EllipPara(0.01f / 9f, 0.01f / 9f, 0.004f, -0.5f, -0.12f, 0.0f);
-            //mustache.setColor(new Vector3(0f, 0f, 255f));
-            //mustache.rotate(main_head._center, mustache._euler[1], 45);
-            //main_head.addChildClass(mustache);
-            //ears.rotate(ears._center, ears._euler[1], 45);
-            //main_head.addChild(0.075f, 0.075f, 0.075f, -0.5f, 0.3f, 0.0f, 300, 100);
-            //main_head.addChildClass(nose);
+        protected override void OnLoad()
+        {
+            base.OnLoad();
+            ////Background 
+            main_head = new Asset3d();
+            //main_head.createElipseoid(0.5f, 0.45f, 0.4f, 0.5f, 0.5f, 0.5f);
+            main_head.createEllipsoid2(0.5f, 0.45f, 0.5f, 0.0f, 0.0f, 0.0f, 300, 100);
+            main_head.setColor(new Vector3(255.0f, 255.0f, 0.0f));
 
+            makeEyes();
+            makeMouth();
+            makeMustache();
+
+            Asset3d ears;
+            //right ear
+            ears = new Asset3d();
+            ears.EllipPara(0.021f, 0.021f, 0.004f, -0.07f, 0f, -0.76f) ;
+            ears.rotate(main_head._center, ears._euler[0], 90);
+            ears.rotate(main_head._center, ears._euler[1], 15);
+            ears.setColor(new Vector3(255.0f, 255.0f, 0.0f));
+            main_head.addChildClass(ears);
+            //left ear
+            ears = new Asset3d();
+            ears.EllipPara(0.021f, 0.021f, 0.004f, 0.07f, 0f, -0.76f) ;
+            ears.rotate(main_head._center, ears._euler[0], 90);
+            ears.rotate(main_head._center, ears._euler[1], -15);
+            ears.setColor(new Vector3(255.0f, 255.0f, 0.0f));
+            main_head.addChildClass(ears);
+
+            //inner left ear
+            ears = new Asset3d();
+            ears.EllipPara(0f, 0.021f/1.5f, 0.004f, 0.3193f, -0.1f, -0.58f) ;
+            ears.rotate(main_head._center, ears._euler[0], 70);
+            ears.rotate(main_head._center, ears._euler[1], -15);
+            ears.rotate(main_head._center, ears._euler[2], 90);
+            ears.setColor(new Vector3(210, 210, 183));
+            main_head.addChildClass(ears);
+            //inner left ear
+            ears = new Asset3d();
+            ears.EllipPara(0f, 0.021f/1.5f, 0.004f, 0.3193f, 0.1f, -0.58f) ;
+            ears.rotate(main_head._center, ears._euler[0], 70);
+            ears.rotate(main_head._center, ears._euler[1], 15);
+            ears.rotate(main_head._center, ears._euler[2], 90);
+            ears.setColor(new Vector3(210, 210, 183));
+            main_head.addChildClass(ears);
+            
             //cone = new Asset3d();
             //cone.createHalfBall(0.5f, 0.5f, 0.5f, -1.0f, 0.0f, 0.5f, 800, 2000);
             //cone.setColor(new Vector3(255, 0, 0));
