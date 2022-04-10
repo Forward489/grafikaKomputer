@@ -88,6 +88,21 @@ namespace Pertemuan1
 
         public void makeEyes()
         {
+            
+        }
+
+        public void makeMouth()
+        {
+            
+        }
+
+        public void makeHead()
+        {
+            main_head = new Asset3d();
+            //main_head.createElipseoid(0.5f, 0.45f, 0.4f, 0.5f, 0.5f, 0.5f);
+            main_head.createEllipsoid2(0.5f, 0.45f, 0.5f, 0.0f, 0.0f, 0.0f, 300, 100);
+            main_head.setColor(new Vector3(255.0f, 255.0f, 0.0f));
+
             Asset3d eyes = new Asset3d();
 
             eyes.createEllipsoid2(0.1f, 0.15f, 0.1f, -0.1f, 0.15f, 0.4f, 300, 100);
@@ -108,10 +123,6 @@ namespace Pertemuan1
             eyes.createEllipsoid2(0.1f / 3f, 0.15f / 3f, 0.05f / 3f, -0.05f, 0.15f, 0.5f, 300, 100);
             eyes.setColor(new Vector3(0.0f, 0.0f, 0.0f));
             main_head.addChildClass(eyes);
-        }
-
-        public void makeMouth()
-        {
             Asset3d cheek = new Asset3d();
             Asset3d smile = new Asset3d();
             Asset3d nose = new Asset3d();
@@ -129,10 +140,6 @@ namespace Pertemuan1
             main_head.addChildClass(smile);
             main_head.addChildClass(cheek);
             main_head.addChildClass(nose);
-        }
-
-        public void makeMustache()
-        {
             Asset3d mustache;
             //Right Mustache
             mustache = new Asset3d();
@@ -181,32 +188,18 @@ namespace Pertemuan1
             mustache.setColor(new Vector3(0, 0, 0));
             mustache.rotate(main_head._center, mustache._euler[0], 110);
             main_head.addChildClass(mustache);
-        }
-
-        protected override void OnLoad()
-        {
-            base.OnLoad();
-            ////Background 
-            main_head = new Asset3d();
-            //main_head.createElipseoid(0.5f, 0.45f, 0.4f, 0.5f, 0.5f, 0.5f);
-            main_head.createEllipsoid2(0.5f, 0.45f, 0.5f, 0.0f, 0.0f, 0.0f, 300, 100);
-            main_head.setColor(new Vector3(255.0f, 255.0f, 0.0f));
-
-            makeEyes();
-            makeMouth();
-            makeMustache();
 
             Asset3d ears;
             //right ear
             ears = new Asset3d();
-            ears.EllipPara(0.021f, 0.021f, 0.004f, -0.07f, 0f, -0.76f) ;
+            ears.EllipPara(0.021f, 0.021f, 0.004f, -0.07f, 0f, -0.76f);
             ears.rotate(main_head._center, ears._euler[0], 90);
             ears.rotate(main_head._center, ears._euler[1], 15);
             ears.setColor(new Vector3(255.0f, 255.0f, 0.0f));
             main_head.addChildClass(ears);
             //left ear
             ears = new Asset3d();
-            ears.EllipPara(0.021f, 0.021f, 0.004f, 0.07f, 0f, -0.76f) ;
+            ears.EllipPara(0.021f, 0.021f, 0.004f, 0.07f, 0f, -0.76f);
             ears.rotate(main_head._center, ears._euler[0], 90);
             ears.rotate(main_head._center, ears._euler[1], -15);
             ears.setColor(new Vector3(255.0f, 255.0f, 0.0f));
@@ -214,7 +207,7 @@ namespace Pertemuan1
 
             //inner left ear
             ears = new Asset3d();
-            ears.EllipPara(0f, 0.021f/1.5f, 0.004f, 0.3193f, -0.1f, -0.58f) ;
+            ears.EllipPara(0f, 0.021f / 1.5f, 0.004f, 0.3193f, -0.1f, -0.58f);
             ears.rotate(main_head._center, ears._euler[0], 70);
             ears.rotate(main_head._center, ears._euler[1], -15);
             ears.rotate(main_head._center, ears._euler[2], 90);
@@ -222,12 +215,25 @@ namespace Pertemuan1
             main_head.addChildClass(ears);
             //inner left ear
             ears = new Asset3d();
-            ears.EllipPara(0f, 0.021f/1.5f, 0.004f, 0.3193f, 0.1f, -0.58f) ;
+            ears.EllipPara(0f, 0.021f / 1.5f, 0.004f, 0.3193f, 0.1f, -0.58f);
             ears.rotate(main_head._center, ears._euler[0], 70);
             ears.rotate(main_head._center, ears._euler[1], 15);
             ears.rotate(main_head._center, ears._euler[2], 90);
             ears.setColor(new Vector3(210, 210, 183));
             main_head.addChildClass(ears);
+        }
+
+        public void makeEars()
+        {
+            
+        }
+
+        protected override void OnLoad()
+        {
+            base.OnLoad();
+            //Background 
+
+            makeHead();
             
             //cone = new Asset3d();
             //cone.createHalfBall(0.5f, 0.5f, 0.5f, -1.0f, 0.0f, 0.5f, 800, 2000);
@@ -236,12 +242,11 @@ namespace Pertemuan1
             main_head.load(Constant.PATH + "shader.vert", Constant.PATH + "shader.frag", Size.X, Size.Y);
             //cone.load(Constant.PATH + "shader.vert", Constant.PATH + "shader.frag", Size.X, Size.Y);
             //cam.addChildClass(cone);
+            main_head.translateObject(0.5f);
             cam.addChildClass(main_head);
-
 
             GL.GetInteger(GetPName.MaxVertexAttribs, out int maxAttributeCount);
             Console.WriteLine($"Maximum number of vertex attributes supported : {maxAttributeCount}");
-            
         }
 
         protected override void OnRenderFrame(FrameEventArgs args)
@@ -251,38 +256,9 @@ namespace Pertemuan1
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             _time += 9.0 * args.Time;
             Matrix4 temp = Matrix4.Identity;
-            //temp = temp * Matrix4.CreateRotationZ(degree);
-            //temp = temp * Matrix4.CreateTranslation(0.5f, 0.5f, 0f);
-            //temp = temp * Matrix4.CreateScale(0.5f);
-            //temp = temp * Matrix4.CreateRotationZ((float)MathHelper.DegreesToRadians(_time));
-            //temp = temp * Matrix4.CreateRotationX((float)MathHelper.DegreesToRadians(_time));
-            //degree += MathHelper.DegreesToRadians(0.1f);
-            //GL.Clear(ClearBufferMask.ColorBufferBit
-
-            //Buat balik framenya, soalnya framenya ada di belakang, jadi kudu dibalik sek
-            //_object[0].rotate(_object[0]._center, _object[0]._euler[1], 10);
-            //_object[0].Child[0].rotate(_object[0].Child[0]._center, _object[0].Child[0]._euler[1], 10);
-            //_object[0].render(0, temp);
-            //_object[1].render(3);
-            //_object[1].rotate(_object[1]._center, _object[1]._euler[1], 10);
-
-            //_object[7].render(3, temp);
-            //_object[7].rotate(_object[7]._center, _object[7]._euler[1], 1);
-            //_object[8].render(3, temp);
-            //_object[8].rotate(_object[8]._center, _object[8]._euler[1], 1);
-            //_object[9].render(3, temp);
-            //_object[9].rotate(_object[9]._center, _object[9]._euler[1], 1);
-            //_object[10].render(3, temp);
-            //_object[10].rotate(_object[10]._center, _object[10]._euler[1], 1);
-            //_object[11].render(3, temp);
-            //_object[11].rotate(_object[11]._center, _object[11]._euler[1], 1);
             //main_head.rotate(main_head._center, main_head._euler[1], 1);
             //smile.rotate(main_head._center, main_head._euler[2], 180);
             main_head.render(3, temp);
-            //cone.rotate(cone._center, cone._euler[1], 1);
-            //cone.render(3, temp);
-            //main_head.Child[0].rotate(main_head.Child[0]._center, main_head.Child[0]._euler[1], 1);
-            //main_head.Child[0].render(3, temp);
             SwapBuffers();
         }
 
