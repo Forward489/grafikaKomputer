@@ -70,6 +70,7 @@ namespace Pertemuan1
         public void load(string shaderVert, string shaderFrag, float Size_x, float Size_y)
         {
             //Background color changing
+            //GL.ClearColor(1.0f, 1.0f, 1.0f, 1.0f);
             GL.ClearColor(1.0f, 1.0f, 1.0f, 1.0f);
             _vertexBufferObject = GL.GenBuffer();
             GL.BindBuffer(BufferTarget.ArrayBuffer, _vertexBufferObject);
@@ -554,6 +555,15 @@ namespace Pertemuan1
                         _indices.Add(k2 + 1);
                     }
                 }
+            }
+        }
+
+        public void translateObject(float y)
+        {
+            _model *= Matrix4.CreateTranslation(0, y, 0);
+            foreach (var i in Child)
+            {
+                i._model *= Matrix4.CreateTranslation(0, y, 0);
             }
         }
         public void createHalfBall(float radiusX, float radiusY, float radiusZ, 
