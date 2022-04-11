@@ -75,7 +75,8 @@ namespace Pertemuan1
         //int _vertexArrayObject;
         //int _elementBufferObject;
         //Shader _shader;
-        Asset3d[] _object = new Asset3d[20];
+        Asset3d[] _object3d = new Asset3d[20];
+        Asset3d body;
         Asset3d main_head;
         Asset3d cone;
         Asset3d cam = new Asset3d();
@@ -86,14 +87,109 @@ namespace Pertemuan1
 
         }
 
-        public void makeEyes()
+        public void makeBody()
         {
-            
-        }
+            //Ganti Background
+            GL.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+            _object3d[0] = new Asset3d();
+            body = new Asset3d();
 
-        public void makeMouth()
-        {
+            //Badan
+            _object3d[0] = new Asset3d();
+            _object3d[0].createEllipsoid2(0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 300, 100);
+            _object3d[0].setColor(new Vector3(44, 87, 91));
+            body.addChildClass(_object3d[0]);
+
+            //Outline bg kantong
+            //_object3d[1] = new Asset3d();
+            //_object3d[1].createEllipsoid2(0.42f, 0.40f, 0.30f, 0.0f, 0.0f, 0.2f, 300, 100);
+            //_object3d[1].setColor(new Vector3(0, 0, 0));
+            //body.addChildClass(_object3d[1]);
+
+            //bg kantong
+            //_object3d[2] = new Asset3d();
+            //_object3d[2].createEllipsoid2(0.40f, 0.38f, 0.25f, 0.0f, 0.0f, 0.25f, 300, 100);
+            //_object3d[2].setColor(new Vector3(255, 255, 255));
+            //body.addChildClass(_object3d[2]);
+
+            //Outline Kantong
+            _object3d[3] = new Asset3d();
+            _object3d[3].createHalfBall(0.3f, 0.3f, 0.03f, 0.0f, -0.15f, 0.475f, 800, 2000);
+            _object3d[3].rotate(_object3d[0]._center, _object3d[0]._euler[2], 180);
+            _object3d[3].rotate(_object3d[0]._center, _object3d[0]._euler[0], 10);
+            _object3d[3].setColor(new Vector3(0, 0, 0));
+            body.addChildClass(_object3d[3]);
+
+            //kantong
+            _object3d[4] = new Asset3d();
+            _object3d[4].createHalfBall(0.28f, 0.28f, 0.0f, 0.0f, -0.2f, 0.5f, 800, 2000);
+            _object3d[4].rotate(_object3d[0]._center, _object3d[0]._euler[2], 180);
+            _object3d[4].rotate(_object3d[0]._center, _object3d[0]._euler[0], 15);
+            _object3d[4].setColor(new Vector3(255, 255, 255));
+            body.addChildClass(_object3d[4]);
+
+            //kalung lonceng
+            _object3d[5] = new Asset3d();
+            _object3d[5].createEllipsoid2(0.5f, 0.08f, 0.5f, 0.0f, 0.29f, 0.0f, 300, 100);
+            _object3d[5].setColor(new Vector3(255, 0, 0));
+            body.addChildClass(_object3d[5]);
+
+
+            //_object3d[5] = new Asset3d();
+            //_object3d[5].EllipCone(0.1f, 0.1f, 0.1f, 0.9f, 0, 0);
+            //_object3d[5].setColor(new Vector3(255, 0, 0));
+            //body.addChildClass(_object3d[5]);
+
+            //_object3d[5] = new Asset3d();
+            //_object3d[5].createEllipsoid2(0.03f, 0.05f, 0.1f, -0.7f, 0.29f, 0.0f, 300, 100);
+            //_object3d[5].setColor(new Vector3(255, 0, 0));
+            //body.addChildClass(_object3d[5]);
+
+            //bg lonceng
+            //_object3d[6] = new Asset3d();
+            //_object3d[6].createEllipsoid2(0.11f, 0.01f, 0.11f, 0.0f, 0.19f, 0.55f, 300, 100);
+            //_object3d[6].setColor(new Vector3(255, 165, 0));
+            //body.addChildClass(_object3d[6]);
+
+            //Hem baju
+            _object3d[1] = new Asset3d();
+                                                    //x   //z   //y
+            _object3d[1].EllipCone(0.14f, 0.02f, 0.15f, 0f, -0.5f, -0.1f);
+            _object3d[1].setColor(new Vector3(0, 0, 0));
+            _object3d[1].rotate(_object3d[0]._center, _object3d[0]._euler[0], -105);
+            _object3d[1].rotate(_object3d[0]._center, _object3d[0]._euler[1], 0);
+
+            body.addChildClass(_object3d[1]);
+
+            //Hem baju
+            _object3d[1] = new Asset3d();
+                                                    //x   //z   //y
+            _object3d[1].EllipCone(0.1f, 0.01f, 0.145f, 0f, -0.51f, -0.05f);
+            _object3d[1].setColor(new Vector3(255, 255, 255));
+            _object3d[1].rotate(_object3d[0]._center, _object3d[0]._euler[0], -100);
+            //_object3d[1].rotate(_object3d[0]._center, _object3d[0]._euler[1], 25);
+
+            body.addChildClass(_object3d[1]);
             
+            //Lonceng
+            _object3d[7] = new Asset3d();
+            _object3d[7].createEllipsoid2(0.03f, 0.03f, 0.03f, 0.0f, 0.3f, 0.55f, 300, 100);
+            _object3d[7].setColor(new Vector3(171, 57, 96));
+            body.addChildClass(_object3d[7]);
+
+            _object3d[7] = new Asset3d();
+            _object3d[7].EllipCone(0.03f, 0.05f, 0.1f, -0.55f, 0.30f, 0f);
+            _object3d[7].setColor(new Vector3(171, 57, 96));
+            _object3d[7].rotate(_object3d[0]._center, _object3d[0]._euler[1], 90);
+            body.addChildClass(_object3d[7]);
+
+            _object3d[7] = new Asset3d();
+            _object3d[7].EllipCone(0.03f, 0.05f, 0.1f, 0.55f, 0.30f, 0f);
+            _object3d[7].setColor(new Vector3(171, 57, 96));
+            _object3d[7].rotate(_object3d[0]._center, _object3d[0]._euler[1], -90);
+            body.addChildClass(_object3d[7]);
+
+
         }
 
         public void makeHead()
@@ -223,27 +319,26 @@ namespace Pertemuan1
             main_head.addChildClass(ears);
         }
 
-        public void makeEars()
-        {
-            
-        }
-
         protected override void OnLoad()
         {
             base.OnLoad();
             //Background 
 
             makeHead();
+            makeBody();
             
             //cone = new Asset3d();
             //cone.createHalfBall(0.5f, 0.5f, 0.5f, -1.0f, 0.0f, 0.5f, 800, 2000);
             //cone.setColor(new Vector3(255, 0, 0));
 
             main_head.load(Constant.PATH + "shader.vert", Constant.PATH + "shader.frag", Size.X, Size.Y);
+            body.load(Constant.PATH + "shader.vert", Constant.PATH + "shader.frag", Size.X, Size.Y);
             //cone.load(Constant.PATH + "shader.vert", Constant.PATH + "shader.frag", Size.X, Size.Y);
             //cam.addChildClass(cone);
             main_head.translateObject(0.5f);
+            body.translateObject(-0.15f);
             cam.addChildClass(main_head);
+            cam.addChildClass(body);
 
             GL.GetInteger(GetPName.MaxVertexAttribs, out int maxAttributeCount);
             Console.WriteLine($"Maximum number of vertex attributes supported : {maxAttributeCount}");
@@ -259,6 +354,7 @@ namespace Pertemuan1
             //main_head.rotate(main_head._center, main_head._euler[1], 1);
             //smile.rotate(main_head._center, main_head._euler[2], 180);
             main_head.render(3, temp);
+            body.render(3, temp);
             SwapBuffers();
         }
 
