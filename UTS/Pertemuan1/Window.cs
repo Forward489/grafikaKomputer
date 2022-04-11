@@ -31,6 +31,7 @@ namespace Pertemuan1
         Asset3d left_foot;
         Asset3d cam = new Asset3d();
         Asset3d cape;
+        Asset3d pawaemon = new Asset3d();
         float degree = 0;
         double _time = 0;
         public Window(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings) : base(gameWindowSettings, nativeWindowSettings)
@@ -91,7 +92,7 @@ namespace Pertemuan1
             //kalung lonceng
             _object3d[5] = new Asset3d();
             _object3d[5].createEllipsoid2(0.5f, 0.08f, 0.5f, 0.0f, 0.29f, 0.0f, 300, 100);
-            _object3d[5].setColor(new Vector3(255, 0, 0));
+            _object3d[5].setColor(new Vector3(240, 57, 96));
             body.addChildClass(_object3d[5]);
 
             //Hem baju
@@ -330,40 +331,65 @@ namespace Pertemuan1
             
         }
 
-        protected override void OnLoad()
+        public void makePawaemon()
         {
-            base.OnLoad();
-            //Background 
             makeFoot();
             makeHead();
             makeBody();
             makeHand();
 
+            main_head.translateObject(0, 0.54f, 0);
+            body.translateObject(0, -0.15f, 0);
+            right_foot.translateObject(0, -0.15f, 0);
+            left_foot.translateObject(0, -0.15f, 0);
+
+            pawaemon.addChildClass(main_head);
+            pawaemon.addChildClass(body);
+            pawaemon.addChildClass(right_hand);
+            pawaemon.addChildClass(left_hand);
+            pawaemon.addChildClass(right_foot);
+            pawaemon.addChildClass(left_foot);
+        }
+
+        protected override void OnLoad()
+        {
+            base.OnLoad();
+            //Background 
+            //makeFoot();
+            //makeHead();
+            //makeBody();
+            //makeHand();
+
+            makePawaemon();
+
             //cone = new Asset3d();
             //cone.createHalfBall(0.5f, 0.5f, 0.5f, -1.0f, 0.0f, 0.5f, 800, 2000);
             //cone.setColor(new Vector3(255, 0, 0));
 
-            main_head.load(Constant.PATH + "shader.vert", Constant.PATH + "shader.frag", Size.X, Size.Y);
-            body.load(Constant.PATH + "shader.vert", Constant.PATH + "shader.frag", Size.X, Size.Y);
-            //cone.load(Constant.PATH + "shader.vert", Constant.PATH + "shader.frag", Size.X, Size.Y);
-            //cam.addChildClass(cone);
-            right_hand.load(Constant.PATH + "shader.vert", Constant.PATH + "shader.frag", Size.X, Size.Y);
-            left_hand.load(Constant.PATH + "shader.vert", Constant.PATH + "shader.frag", Size.X, Size.Y);
-            right_foot.load(Constant.PATH + "shader.vert", Constant.PATH + "shader.frag", Size.X, Size.Y);
-            left_foot.load(Constant.PATH + "shader.vert", Constant.PATH + "shader.frag", Size.X, Size.Y);
-            main_head.translateObject(0,0.54f,0);
-            //main_head.translateObject(0,0,0);
-            body.translateObject(0,-0.15f,0);
-            //body.translateObject(0,-1f,0);
-            right_foot.translateObject(0, -0.15f, 0);
-            left_foot.translateObject(0, -0.15f, 0);
+            pawaemon.load(Constant.PATH + "shader.vert", Constant.PATH + "shader.frag", Size.X, Size.Y);
 
-            cam.addChildClass(main_head);
-            cam.addChildClass(body);
-            cam.addChildClass(right_hand);
-            cam.addChildClass(left_hand);
-            cam.addChildClass(right_foot);
-            cam.addChildClass(left_foot);
+            //main_head.load(Constant.PATH + "shader.vert", Constant.PATH + "shader.frag", Size.X, Size.Y);
+            //body.load(Constant.PATH + "shader.vert", Constant.PATH + "shader.frag", Size.X, Size.Y);
+            ////cone.load(Constant.PATH + "shader.vert", Constant.PATH + "shader.frag", Size.X, Size.Y);
+            ////cam.addChildClass(cone);
+            //right_hand.load(Constant.PATH + "shader.vert", Constant.PATH + "shader.frag", Size.X, Size.Y);
+            //left_hand.load(Constant.PATH + "shader.vert", Constant.PATH + "shader.frag", Size.X, Size.Y);
+            //right_foot.load(Constant.PATH + "shader.vert", Constant.PATH + "shader.frag", Size.X, Size.Y);
+            //left_foot.load(Constant.PATH + "shader.vert", Constant.PATH + "shader.frag", Size.X, Size.Y);
+            //main_head.translateObject(0,0.54f,0);
+            ////main_head.translateObject(0,0,0);
+            //body.translateObject(0,-0.15f,0);
+            ////body.translateObject(0,-1f,0);
+            //right_foot.translateObject(0, -0.15f, 0);
+            //left_foot.translateObject(0, -0.15f, 0);
+
+            //cam.addChildClass(main_head);
+            //cam.addChildClass(body);
+            //cam.addChildClass(right_hand);
+            //cam.addChildClass(left_hand);
+            //cam.addChildClass(right_foot);
+            //cam.addChildClass(left_foot);
+            cam.addChildClass(pawaemon);
 
             GL.GetInteger(GetPName.MaxVertexAttribs, out int maxAttributeCount);
             Console.WriteLine($"Maximum number of vertex attributes supported : {maxAttributeCount}");
@@ -378,12 +404,13 @@ namespace Pertemuan1
             Matrix4 temp = Matrix4.Identity;
             //main_head.rotate(main_head._center, main_head._euler[1], 1);
             //smile.rotate(main_head._center, main_head._euler[2], 180);
-            main_head.render(3, temp);
-            body.render(3, temp);
-            right_hand.render(3, temp);
-            left_hand.render(3, temp);
-            right_foot.render(3, temp);
-            left_foot.render(3, temp);
+            //main_head.render(3, temp);
+            //body.render(3, temp);
+            //right_hand.render(3, temp);
+            //left_hand.render(3, temp);
+            //right_foot.render(3, temp);
+            //left_foot.render(3, temp);
+            pawaemon.render(3, temp);
             SwapBuffers();
         }
 
