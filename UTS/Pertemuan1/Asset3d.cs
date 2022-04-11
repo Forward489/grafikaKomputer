@@ -454,6 +454,22 @@ namespace Pertemuan1
                 }
             }
         }
+        public void EllipCone2(float radius_x, float radius_y, float radius_z, float _x,
+        float _y, float _z)
+        {
+            float pi = (float)Math.PI;
+            Vector3 temp_vector;
+            for (float u = -pi; u <= pi; u += pi / 720)
+            {
+                for (float v = -pi / 2; v <= pi / 2; v += pi / 720)
+                {
+                    temp_vector.X = _x + (float)v * (float)Math.Cos(u) * radius_x;
+                    temp_vector.Y = _y + (float)v * (float)Math.Sin(u) * radius_y;
+                    temp_vector.Z = _z + (float)v * radius_z;
+                    _vertices.Add(temp_vector);
+                }
+            }
+        }
 
         public void EllipPara(float radius_x, float radius_y, float radius_z, float _x,
         float _y, float _z)
@@ -558,12 +574,13 @@ namespace Pertemuan1
             }
         }
 
-        public void translateObject(float y)
+        public void translateObject(float x, float y, float z)
         {
-            _model *= Matrix4.CreateTranslation(0, y, 0);
+            
+            _model *= Matrix4.CreateTranslation(x, y, z);
             foreach (var i in Child)
             {
-                i._model *= Matrix4.CreateTranslation(0, y, 0);
+                i._model *= Matrix4.CreateTranslation(x, y, z);
             }
         }
         public void createHalfBall(float radiusX, float radiusY, float radiusZ, 
@@ -622,91 +639,5 @@ namespace Pertemuan1
         {
             return 1 / cos;
         }
-
-        ////public void updateMousePosition(float x, float y, float z)
-        ////{
-        ////    _vertices[index * 3] = x;
-        ////   _vertices[index * 3 + 1] = y;
-        ////   _vertices[index * 3 + 2] = z;
-        ////    index++;
-
-        ////    GL.BufferData(BufferTarget.ArrayBuffer, index * 3 * sizeof(float), _vertices, BufferUsageHint.StaticDraw);
-        ////    GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
-        ////}
-        //public void updateMousePosition(float x, float y, float z)
-        //{
-        //    _vertices[index * 3] = x;
-        //   _vertices[index * 3 + 1] = y;
-        //   _vertices[index * 3 + 2] = z;
-        //    index++;
-
-        //    GL.BufferData(BufferTarget.ArrayBuffer, index * 3 * sizeof(float), _vertices, BufferUsageHint.StaticDraw);
-        //    GL.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, 3 * sizeof(float), 0);
-        //    GL.EnableVertexAttribArray(0);
-        //}
-        //public List<int> getRow(int row_index)
-        //{
-        //    List<int> current_row = new List<int>();
-        //    current_row.Add(1);
-        //    if(row_index == 0)
-        //    {
-        //        return current_row;
-        //    }
-        //    List<int> prev = getRow(row_index - 1);
-        //    for(int i = 1;i<prev.Count;i++)
-        //    {
-        //        int curr = prev[i - 1] + prev[i];
-        //        current_row.Add(curr);
-        //    }
-        //    current_row.Add(1);
-        //    return current_row;
-        //}
-
-        //public List<float> CreateCurveBezier()
-        //{
-        //    List<float> _vertices_bezier = new List<float>();
-        //    List<int> pascal = getRow(index - 1);
-        //    _pascal = pascal.ToArray();
-        //    for (float t = 0; t <= 1.0f; t += 0.01f)
-        //    {
-        //        Vector2 p = getP(index, t);
-        //        _vertices_bezier.Add(p.X);
-        //        _vertices_bezier.Add(p.Y);
-        //        _vertices_bezier.Add(0);
-        //    }
-        //    return _vertices_bezier;
-        //}
-        //public Vector2 getP (int n, float t)
-        //{
-        //    Vector2 p = new Vector2(0, 0);
-        //    float [] k = new float[n];
-        //    for (int i = 0; i < n; i++)
-        //    {
-        //        k[i] = (float)Math.Pow((1 - t), n - 1 - i) * (float)Math.Pow(t,i) * _pascal[i];
-        //        p.X += k[i] * _vertices[i * 3];
-        //        p.Y += k[i] * _vertices[i * 3 + 1];
-        //    }
-        //    return p;
-        //}
-
-        //public bool getVerticesLength()
-        //{
-        //    if (_vertices[0] == 0)
-        //    {
-        //        return false;
-        //    } 
-        //    if ((_vertices.Length + 1 / 3) > 0)
-        //    {
-        //        return true;
-        //    } else
-        //    {
-        //        return false;
-        //    }
-        //}
-
-        //public void setVertices(float[] vertices)
-        //{
-        //    _vertices = vertices;
-        //}
     }
 }
