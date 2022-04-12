@@ -31,6 +31,7 @@ namespace Pertemuan1
         Asset3d left_foot;
         Asset3d cam = new Asset3d();
         Asset3d cape;
+        Camera _camera;
         Asset3d pawaemon = new Asset3d();
         float degree = 0;
         double _time = 0;
@@ -354,41 +355,11 @@ namespace Pertemuan1
         protected override void OnLoad()
         {
             base.OnLoad();
-            //Background 
-            //makeFoot();
-            //makeHead();
-            //makeBody();
-            //makeHand();
-
+            
             makePawaemon();
 
-            //cone = new Asset3d();
-            //cone.createHalfBall(0.5f, 0.5f, 0.5f, -1.0f, 0.0f, 0.5f, 800, 2000);
-            //cone.setColor(new Vector3(255, 0, 0));
-
             pawaemon.load(Constant.PATH + "shader.vert", Constant.PATH + "shader.frag", Size.X, Size.Y);
-
-            //main_head.load(Constant.PATH + "shader.vert", Constant.PATH + "shader.frag", Size.X, Size.Y);
-            //body.load(Constant.PATH + "shader.vert", Constant.PATH + "shader.frag", Size.X, Size.Y);
-            ////cone.load(Constant.PATH + "shader.vert", Constant.PATH + "shader.frag", Size.X, Size.Y);
-            ////cam.addChildClass(cone);
-            //right_hand.load(Constant.PATH + "shader.vert", Constant.PATH + "shader.frag", Size.X, Size.Y);
-            //left_hand.load(Constant.PATH + "shader.vert", Constant.PATH + "shader.frag", Size.X, Size.Y);
-            //right_foot.load(Constant.PATH + "shader.vert", Constant.PATH + "shader.frag", Size.X, Size.Y);
-            //left_foot.load(Constant.PATH + "shader.vert", Constant.PATH + "shader.frag", Size.X, Size.Y);
-            //main_head.translateObject(0,0.54f,0);
-            ////main_head.translateObject(0,0,0);
-            //body.translateObject(0,-0.15f,0);
-            ////body.translateObject(0,-1f,0);
-            //right_foot.translateObject(0, -0.15f, 0);
-            //left_foot.translateObject(0, -0.15f, 0);
-
-            //cam.addChildClass(main_head);
-            //cam.addChildClass(body);
-            //cam.addChildClass(right_hand);
-            //cam.addChildClass(left_hand);
-            //cam.addChildClass(right_foot);
-            //cam.addChildClass(left_foot);
+            _camera = new Camera(new Vector3(0, 0, 1), Size.X / Size.Y);
             cam.addChildClass(pawaemon);
 
             GL.GetInteger(GetPName.MaxVertexAttribs, out int maxAttributeCount);
@@ -402,15 +373,9 @@ namespace Pertemuan1
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             _time += 9.0 * args.Time;
             Matrix4 temp = Matrix4.Identity;
-            //main_head.rotate(main_head._center, main_head._euler[1], 1);
-            //smile.rotate(main_head._center, main_head._euler[2], 180);
-            //main_head.render(3, temp);
-            //body.render(3, temp);
-            //right_hand.render(3, temp);
-            //left_hand.render(3, temp);
-            //right_foot.render(3, temp);
-            //left_foot.render(3, temp);
-            pawaemon.render(3, temp);
+
+            pawaemon.render(3, temp, _camera.GetViewMatrix(), _camera.GetProjectionMatrix());
+
             SwapBuffers();
         }
 
@@ -426,10 +391,6 @@ namespace Pertemuan1
             if (KeyboardState.IsKeyDown(OpenTK.Windowing.GraphicsLibraryFramework.Keys.Escape))
             {
                 Close();
-            }
-            if (KeyboardState.IsKeyReleased(OpenTK.Windowing.GraphicsLibraryFramework.Keys.A))
-            {
-                Console.Write("Hello Glenn \n");
             }
             if (KeyboardState.IsKeyDown(Keys.Up))
             {
@@ -454,6 +415,32 @@ namespace Pertemuan1
             if (KeyboardState.IsKeyDown(Keys.E))
             {
                 cam.rotate(cam._center, cam._euler[2], 5);
+            }
+
+            float cameraSpeed = 0.5f;
+            if (KeyboardState.IsKeyDown(OpenTK.Windowing.GraphicsLibraryFramework.Keys.W))
+            {
+                _camera.Position += _camera.Front * cameraSpeed * (float)args.Time;
+            }
+            if (KeyboardState.IsKeyDown(OpenTK.Windowing.GraphicsLibraryFramework.Keys.S))
+            {
+                _camera.Position -= _camera.Front * cameraSpeed * (float)args.Time;
+            }
+            if (KeyboardState.IsKeyDown(OpenTK.Windowing.GraphicsLibraryFramework.Keys.A))
+            {
+                _camera.Position += _camera.Right * cameraSpeed * (float)args.Time;
+            }
+            if (KeyboardState.IsKeyDown(OpenTK.Windowing.GraphicsLibraryFramework.Keys.D))
+            {
+                _camera.Position -= _camera.Right * cameraSpeed * (float)args.Time;
+            }
+            if (KeyboardState.IsKeyDown(OpenTK.Windowing.GraphicsLibraryFramework.Keys.Space))
+            {
+                _camera.Position += _camera.Up * cameraSpeed * (float)args.Time;
+            }
+            if (KeyboardState.IsKeyDown(OpenTK.Windowing.GraphicsLibraryFramework.Keys.LeftShift))
+            {
+                _camera.Position -= _camera.Up * cameraSpeed * (float)args.Time;
             }
         }
 
