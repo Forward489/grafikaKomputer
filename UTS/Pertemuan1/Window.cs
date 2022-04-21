@@ -244,7 +244,7 @@ namespace Pertemuan1
             ears.rotate(main_head_pawaemon._center, ears._euler[1], 15);
             ears.setColor(new Vector3(227, 184, 93));
             main_head_pawaemon.addChildClass(ears);
-            //left ear
+            //left_pawaemon ear
             ears = new Asset3d();
             ears.EllipPara(0.021f, 0.021f, 0.004f, 0.07f, 0f, -0.76f);
             ears.rotate(main_head_pawaemon._center, ears._euler[0], 90);
@@ -252,7 +252,7 @@ namespace Pertemuan1
             ears.setColor(new Vector3(227, 184, 93));
             main_head_pawaemon.addChildClass(ears);
 
-            //inner left ear
+            //inner left_pawaemon ear
             ears = new Asset3d();
             ears.EllipPara(0f, 0.021f / 1.5f, 0.004f, 0.3193f, -0.1f, -0.58f);
             ears.rotate(main_head_pawaemon._center, ears._euler[0], 70);
@@ -260,7 +260,7 @@ namespace Pertemuan1
             ears.rotate(main_head_pawaemon._center, ears._euler[2], 90);
             ears.setColor(new Vector3(210, 210, 183));
             main_head_pawaemon.addChildClass(ears);
-            //inner left ear
+            //inner left_pawaemon ear
             ears = new Asset3d();
             ears.EllipPara(0f, 0.021f / 1.5f, 0.004f, 0.3193f, 0.1f, -0.58f);
             ears.rotate(main_head_pawaemon._center, ears._euler[0], 70);
@@ -293,7 +293,7 @@ namespace Pertemuan1
             right_hand_pawaemon.addChildClass(arm);
 
 
-            //left arm
+            //left_pawaemon arm
             left_hand_pawaemon = new Asset3d();
             left_hand_pawaemon.EllipPara(0.011f, 0.011f, 0.0035f, -0.45f, 0f, 0f);
             left_hand_pawaemon.setColor(new Vector3(44, 74, 91));
@@ -301,7 +301,7 @@ namespace Pertemuan1
             left_hand_pawaemon.rotate(left_hand_pawaemon._center, left_hand_pawaemon._euler[0], 270);
             left_hand_pawaemon.rotate(left_hand_pawaemon._center, left_hand_pawaemon._euler[1], -15);
 
-            //left arm
+            //left_pawaemon arm
             arm = new Asset3d();
             arm.EllipPara(0.011f, 0.011f, 0.004f, -0.45f, 0f, 0f);
             arm.setColor(new Vector3(236, 239, 241));
@@ -309,7 +309,7 @@ namespace Pertemuan1
             arm.rotate(right_hand_pawaemon._center, arm._euler[1], -15);
             left_hand_pawaemon.addChildClass(arm);
 
-            //left hand
+            //left_pawaemon hand
             arm = new Asset3d();
             arm.createEllipsoid2(0.12f, 0.12f, 0.12f, -0.55f, 0.3f, 0.0f, 300, 100);
             arm.setColor(new Vector3(211, 211, 211));
@@ -328,11 +328,11 @@ namespace Pertemuan1
             leg.setColor(new Vector3(227, 184, 93));
             right_foot_pawaemon.addChildClass(leg);
 
-            //left foot
+            //left_pawaemon foot
             left_foot_pawaemon = new Asset3d();
             left_foot_pawaemon.createEllipsoid2(0.2f, 0.1f, 0.2f, -0.2f, -0.75f, 0.0f, 300, 100);
             left_foot_pawaemon.setColor(new Vector3(56, 60, 61));
-            //left leg
+            //left_pawaemon leg
             leg = new Asset3d();
             leg.createHalfBall(0.2f, 0.45f, 0.1f, -0.2f, -0.7f, 0.0f, 800, 2000);
             leg.setColor(new Vector3(227, 184, 93));
@@ -372,81 +372,81 @@ namespace Pertemuan1
             GL.GetInteger(GetPName.MaxVertexAttribs, out int maxAttributeCount);
             Console.WriteLine($"Maximum number of vertex attributes supported : {maxAttributeCount}");
         }
-        bool plus = true;
-        float rotate = 0;
-        float totalRot = 30;
-        float rotDeg = 1;
-        int left = 1;
-        bool [] leftFoot = {true, false};
+        bool plus_pawaemon = true;
+        float rotate_pawaemon = 0;
+        float totalRotPawaemon = 30;
+        float rotDegPawaemon = 1;
+        int left_pawaemon = 1;
+        bool [] leftFootPawaemon = {true, false};
         private void animatePawaemon()
         {
             //condition of moving animation for positive degree
-            if (rotate >= 0 && rotate < totalRot)
+            if (rotate_pawaemon >= 0 && rotate_pawaemon < totalRotPawaemon)
             {
-                plus = true;
+                plus_pawaemon = true;
             }
             //condition of moving animation for negative degree
             else
             {
-                //first checking after rotate is equal to total rotation (totalRot)
-                if (plus)
+                //first checking after rotate_pawaemon is equal to total rotation (totalRotPawaemon)
+                if (plus_pawaemon)
                 {
-                    rotate = -1;
+                    rotate_pawaemon = -1;
                 }
                 
                 //-1 > -30 or -2 > -30 or -3 > -30 and until -30 == -30
-                if (rotate > (-1 * totalRot - 1))
+                if (rotate_pawaemon > (-1 * totalRotPawaemon - 1))
                 {
-                    plus = false;
+                    plus_pawaemon = false;
                 }
                 //switching movement back to positive degree condition
                 else
                 {
-                    rotate = 0;
-                    plus = true;
-                    if (left == 1)
+                    rotate_pawaemon = 0;
+                    plus_pawaemon = true;
+                    if (left_pawaemon == 1)
                     {
-                        left = 0;
+                        left_pawaemon = 0;
                     }
                     else
                     {
-                        left = 1;
+                        left_pawaemon = 1;
                     }
                 }
             }
-            if (plus)
+            if (plus_pawaemon)
             {
                 
-                pawaemon.Child[3].rotate(pawaemon.Child[3]._center, pawaemon.Child[3]._euler[0], rotDeg);
+                pawaemon.Child[3].rotate(pawaemon.Child[3]._center, pawaemon.Child[3]._euler[0], rotDegPawaemon);
                 
-                pawaemon.Child[2].rotate(pawaemon._center, pawaemon._euler[1], rotDeg * -1);
-                if (leftFoot[left])
+                pawaemon.Child[2].rotate(pawaemon._center, pawaemon._euler[1], rotDegPawaemon * -1);
+                if (leftFootPawaemon[left_pawaemon])
                 {
-                    pawaemon.Child[5].rotate(pawaemon._center, pawaemon._euler[0], rotDeg * -1);
-                    pawaemon.Child[0].rotate(pawaemon.Child[0]._center, pawaemon.Child[3]._euler[2], rotDeg / 3);
+                    pawaemon.Child[5].rotate(pawaemon._center, pawaemon._euler[0], rotDegPawaemon * -1);
+                    pawaemon.Child[0].rotate(pawaemon.Child[0]._center, pawaemon.Child[3]._euler[2], rotDegPawaemon / 3);
                 }
                 else
                 {
-                    pawaemon.Child[4].rotate(pawaemon._center, pawaemon._euler[0], rotDeg * -1);
-                    pawaemon.Child[0].rotate(pawaemon.Child[0]._center, pawaemon.Child[3]._euler[2], rotDeg / 3 * -1);
+                    pawaemon.Child[4].rotate(pawaemon._center, pawaemon._euler[0], rotDegPawaemon * -1);
+                    pawaemon.Child[0].rotate(pawaemon.Child[0]._center, pawaemon.Child[3]._euler[2], rotDegPawaemon / 3 * -1);
                 }
-                rotate += rotDeg;
+                rotate_pawaemon += rotDegPawaemon;
             }
             else
             {
-                pawaemon.Child[3].rotate(pawaemon.Child[3]._center, pawaemon.Child[3]._euler[0], rotDeg * -1);
-                pawaemon.Child[2].rotate(pawaemon._center, pawaemon._euler[1], rotDeg);
-                if (leftFoot[left])
+                pawaemon.Child[3].rotate(pawaemon.Child[3]._center, pawaemon.Child[3]._euler[0], rotDegPawaemon * -1);
+                pawaemon.Child[2].rotate(pawaemon._center, pawaemon._euler[1], rotDegPawaemon);
+                if (leftFootPawaemon[left_pawaemon])
                 {
-                    pawaemon.Child[5].rotate(pawaemon._center, pawaemon._euler[0], rotDeg);
-                    pawaemon.Child[0].rotate(pawaemon.Child[0]._center, pawaemon.Child[3]._euler[2], rotDeg / 3 * -1);
+                    pawaemon.Child[5].rotate(pawaemon._center, pawaemon._euler[0], rotDegPawaemon);
+                    pawaemon.Child[0].rotate(pawaemon.Child[0]._center, pawaemon.Child[3]._euler[2], rotDegPawaemon / 3 * -1);
                 } 
                 else
                 {
-                    pawaemon.Child[4].rotate(pawaemon._center, pawaemon._euler[0], rotDeg);
-                    pawaemon.Child[0].rotate(pawaemon.Child[0]._center, pawaemon.Child[3]._euler[2], rotDeg / 3);
+                    pawaemon.Child[4].rotate(pawaemon._center, pawaemon._euler[0], rotDegPawaemon);
+                    pawaemon.Child[0].rotate(pawaemon.Child[0]._center, pawaemon.Child[3]._euler[2], rotDegPawaemon / 3);
                 }
-                rotate -= rotDeg;
+                rotate_pawaemon -= rotDegPawaemon;
             }
         }
 
