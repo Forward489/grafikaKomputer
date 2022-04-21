@@ -32,9 +32,15 @@ namespace Pertemuan1
         Asset3d cam = new Asset3d();
         Asset3d cape;
         Camera _camera;
+        bool _firstMove = true;
+        Vector2 _lastPos;
+        Vector3 _objectPos = new Vector3(0.0f, 0.0f, 0.0f);
+        float _rotationSpeed = 1;
+
         Asset3d pawaemon = new Asset3d();
         float degree = 0;
         double _time = 0;
+        
         public Window(GameWindowSettings gameWindowSettings, NativeWindowSettings nativeWindowSettings) : base(gameWindowSettings, nativeWindowSettings)
         {
 
@@ -268,42 +274,45 @@ namespace Pertemuan1
         {
             //right hand
             right_hand = new Asset3d();
-            right_hand.createEllipsoid2(0.12f, 0.12f, 0.12f, 0.55f, -0.3f, 0.0f, 300, 100);
+            right_hand.createEllipsoid2(0.12f, 0.12f, 0.12f, 0.55f, 0, 0.3f, 300, 100);
             right_hand.setColor(new Vector3(211, 211, 211));
             //right arm
             Asset3d arm = new Asset3d();
             arm.EllipPara(0.011f, 0.011f, 0.004f, 0.45f, 0f, 0f);
             arm.setColor(new Vector3(236, 239, 241));
-            arm.rotate(right_hand._center, arm._euler[0], 90);
+            arm.rotate(right_hand._center, arm._euler[0], 0);
             arm.rotate(right_hand._center, arm._euler[1], 15);
             right_hand.addChildClass(arm);
 
             arm = new Asset3d();
             arm.EllipPara(0.013f, 0.013f, 0.0035f, 0.45f, 0f, 0f);
             arm.setColor(new Vector3(44, 74, 91));
-            arm.rotate(right_hand._center, arm._euler[0], 90);
+            //arm.rotate(right_hand._center, arm._euler[0], 90);
+            arm.rotate(right_hand._center, arm._euler[0], 0);
             arm.rotate(right_hand._center, arm._euler[1], 15);
             right_hand.addChildClass(arm);
 
-            //left hand
-            left_hand = new Asset3d();
-            left_hand.createEllipsoid2(0.12f, 0.12f, 0.12f, -0.55f, -0.3f, 0.0f, 300, 100);
-            left_hand.setColor(new Vector3(211, 211, 211));
 
             //left arm
-            arm = new Asset3d();
-            arm.EllipPara(0.011f, 0.011f, 0.0035f, -0.45f, 0f, 0f);
-            arm.setColor(new Vector3(44, 74, 91));
-            arm.rotate(right_hand._center, arm._euler[0], 90);
-            arm.rotate(right_hand._center, arm._euler[1], -15);
-            left_hand.addChildClass(arm);
+            left_hand = new Asset3d();
+            left_hand.EllipPara(0.011f, 0.011f, 0.0035f, -0.45f, 0f, 0f);
+            left_hand.setColor(new Vector3(44, 74, 91));
+            //left_hand.rotate(right_hand._center, left_hand._euler[0], 90);
+            left_hand.rotate(left_hand._center, left_hand._euler[0], 270);
+            left_hand.rotate(left_hand._center, left_hand._euler[1], -15);
 
             //left arm
             arm = new Asset3d();
             arm.EllipPara(0.011f, 0.011f, 0.004f, -0.45f, 0f, 0f);
             arm.setColor(new Vector3(236, 239, 241));
-            arm.rotate(right_hand._center, arm._euler[0], 90);
+            arm.rotate(right_hand._center, arm._euler[0], 270);
             arm.rotate(right_hand._center, arm._euler[1], -15);
+            left_hand.addChildClass(arm);
+
+            //left hand
+            arm = new Asset3d();
+            arm.createEllipsoid2(0.12f, 0.12f, 0.12f, -0.55f, 0.3f, 0.0f, 300, 100);
+            arm.setColor(new Vector3(211, 211, 211));
             left_hand.addChildClass(arm);
         }
 
@@ -328,8 +337,6 @@ namespace Pertemuan1
             leg.createHalfBall(0.2f, 0.45f, 0.1f, -0.2f, -0.7f, 0.0f, 800, 2000);
             leg.setColor(new Vector3(227, 184, 93));
             left_foot.addChildClass(leg);
-
-            
         }
 
         public void makePawaemon()
@@ -341,8 +348,8 @@ namespace Pertemuan1
 
             main_head.translateObject(0, 0.54f, 0);
             body.translateObject(0, -0.15f, 0);
-            right_foot.translateObject(0, -0.15f, 0);
-            left_foot.translateObject(0, -0.15f, 0);
+            //right_foot.translateObject(0, -0.15f, 0);
+            //left_foot.translateObject(0, -0.15f, 0);
 
             pawaemon.addChildClass(main_head);
             pawaemon.addChildClass(body);
@@ -365,6 +372,82 @@ namespace Pertemuan1
             GL.GetInteger(GetPName.MaxVertexAttribs, out int maxAttributeCount);
             Console.WriteLine($"Maximum number of vertex attributes supported : {maxAttributeCount}");
         }
+        bool plus = true;
+        float rotate = 0;
+        float totalRot = 30;
+        float rotDeg = 1;
+        int left = 1;
+        bool [] leftFoot = {true, false};
+        private void animate()
+        {
+            //condition of moving animation for positive degree
+            if (rotate >= 0 && rotate < totalRot)
+            {
+                plus = true;
+            }
+            //condition of moving animation for negative degree
+            else
+            {
+                //first checking after rotate is equal to total rotation (totalRot)
+                if (plus)
+                {
+                    rotate = -1;
+                }
+                
+                if (rotate > (-1 * totalRot - 1))
+                {
+                    plus = false;
+                }
+                //switching movement to positive degree condition
+                else
+                {
+                    rotate = 0;
+                    plus = true;
+                    if (left == 1)
+                    {
+                        left = 0;
+                    }else
+                    {
+                        left = 1;
+                    }
+                }
+            }
+            if (plus)
+            {
+                
+                pawaemon.Child[3].rotate(pawaemon.Child[3]._center, pawaemon.Child[3]._euler[0], rotDeg);
+                
+                pawaemon.Child[2].rotate(pawaemon._center, pawaemon._euler[1], rotDeg * -1);
+                if (leftFoot[left])
+                {
+                    pawaemon.Child[5].rotate(pawaemon._center, pawaemon._euler[0], rotDeg * -1);
+                    pawaemon.Child[0].rotate(pawaemon.Child[0]._center, pawaemon.Child[3]._euler[2], rotDeg / 3);
+                }
+                else
+                {
+                    pawaemon.Child[4].rotate(pawaemon._center, pawaemon._euler[0], rotDeg * -1);
+                    pawaemon.Child[0].rotate(pawaemon.Child[0]._center, pawaemon.Child[3]._euler[2], rotDeg / 3 * -1);
+                }
+                rotate += rotDeg;
+            }
+            else
+            {
+                //pawaemon.Child[0].rotate(pawaemon.Child[0]._center, pawaemon.Child[3]._euler[2], rotDeg * -1 / 3);
+                pawaemon.Child[3].rotate(pawaemon.Child[3]._center, pawaemon.Child[3]._euler[0], rotDeg * -1);
+                pawaemon.Child[2].rotate(pawaemon._center, pawaemon._euler[1], rotDeg);
+                if (leftFoot[left])
+                {
+                    pawaemon.Child[5].rotate(pawaemon._center, pawaemon._euler[0], rotDeg);
+                    pawaemon.Child[0].rotate(pawaemon.Child[0]._center, pawaemon.Child[3]._euler[2], rotDeg / 3 * -1);
+                } else
+                {
+                    pawaemon.Child[4].rotate(pawaemon._center, pawaemon._euler[0], rotDeg);
+                    pawaemon.Child[0].rotate(pawaemon.Child[0]._center, pawaemon.Child[3]._euler[2], rotDeg / 3);
+                }
+                
+                rotate -= rotDeg;
+            }
+        }
 
         protected override void OnRenderFrame(FrameEventArgs args)
         {
@@ -373,6 +456,11 @@ namespace Pertemuan1
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             _time += 9.0 * args.Time;
             Matrix4 temp = Matrix4.Identity;
+
+            //pawaemon.rotate(pawaemon._center, pawaemon._euler[1], -1);
+            //pawaemon.rotate(pawaemon._center, pawaemon._euler[0], 1);
+
+            animate();
 
             pawaemon.render(3, temp, _camera.GetViewMatrix(), _camera.GetProjectionMatrix());
 
@@ -383,7 +471,16 @@ namespace Pertemuan1
         {
             base.OnResize(e);
             GL.Viewport(0, 0, Size.X, Size.Y);
+            _camera.AspectRatio = Size.X / (float)Size.Y;
         }
+
+        protected override void OnMouseWheel(MouseWheelEventArgs e)
+        {
+            base.OnMouseWheel(e);
+            _camera.Fov = _camera.Fov - e.OffsetY;
+        }
+
+
 
         protected override void OnUpdateFrame(FrameEventArgs args)
         {
@@ -426,11 +523,11 @@ namespace Pertemuan1
             {
                 _camera.Position -= _camera.Front * cameraSpeed * (float)args.Time;
             }
-            if (KeyboardState.IsKeyDown(OpenTK.Windowing.GraphicsLibraryFramework.Keys.A))
+            if (KeyboardState.IsKeyDown(OpenTK.Windowing.GraphicsLibraryFramework.Keys.D))
             {
                 _camera.Position += _camera.Right * cameraSpeed * (float)args.Time;
             }
-            if (KeyboardState.IsKeyDown(OpenTK.Windowing.GraphicsLibraryFramework.Keys.D))
+            if (KeyboardState.IsKeyDown(OpenTK.Windowing.GraphicsLibraryFramework.Keys.A))
             {
                 _camera.Position -= _camera.Right * cameraSpeed * (float)args.Time;
             }
@@ -442,7 +539,92 @@ namespace Pertemuan1
             {
                 _camera.Position -= _camera.Up * cameraSpeed * (float)args.Time;
             }
+
+            if (KeyboardState.IsKeyDown(Keys.N))
+            {
+                var axis = new Vector3(0, 1, 0);
+                _camera.Position -= _objectPos;
+                _camera.Position = Vector3.Transform(
+                    _camera.Position,
+                    generateArbRotationMatrix(axis, _objectPos, _rotationSpeed)
+                    .ExtractRotation());
+                _camera.Position += _objectPos;
+                _camera._front = -Vector3.Normalize(_camera.Position
+                    - _objectPos);
+            }
+            if (KeyboardState.IsKeyDown(Keys.Comma))
+            {
+                var axis = new Vector3(0, 1, 0);
+                _camera.Position -= _objectPos;
+                _camera.Yaw -= _rotationSpeed;
+                _camera.Position = Vector3.Transform(_camera.Position,
+                    generateArbRotationMatrix(axis, _objectPos, -_rotationSpeed)
+                    .ExtractRotation());
+                _camera.Position += _objectPos;
+
+                _camera._front = -Vector3.Normalize(_camera.Position - _objectPos);
+            }
+            if (KeyboardState.IsKeyDown(Keys.K))
+            {
+                var axis = new Vector3(1, 0, 0);
+                _camera.Position -= _objectPos;
+                _camera.Pitch -= _rotationSpeed;
+                _camera.Position = Vector3.Transform(_camera.Position,
+                    generateArbRotationMatrix(axis, _objectPos, _rotationSpeed).ExtractRotation());
+                _camera.Position += _objectPos;
+                _camera._front = -Vector3.Normalize(_camera.Position - _objectPos);
+            }
+            if (KeyboardState.IsKeyDown(Keys.M))
+            {
+                var axis = new Vector3(1, 0, 0);
+                _camera.Position -= _objectPos;
+                _camera.Pitch += _rotationSpeed;
+                _camera.Position = Vector3.Transform(_camera.Position,
+                    generateArbRotationMatrix(axis, _objectPos, -_rotationSpeed).ExtractRotation());
+                _camera.Position += _objectPos;
+                _camera._front = -Vector3.Normalize(_camera.Position - _objectPos);
+            }
+
+            var mouse = MouseState;
+            var sensitivity = 0.2f;
+
+            if (_firstMove)
+            {
+                _lastPos = new Vector2(mouse.X, mouse.Y);
+                _firstMove = false;
+            }
+            else
+            {
+                var deltaX = mouse.X - _lastPos.X;
+                var deltaY = mouse.Y - _lastPos.Y;
+                _lastPos = new Vector2(mouse.X, mouse.Y);
+                _camera.Yaw += deltaX * sensitivity;
+                _camera.Pitch -= deltaY * sensitivity;
+            }
         }
+
+        public Matrix4 generateArbRotationMatrix(Vector3 axis, Vector3 center, float degree)
+        {
+            var rads = MathHelper.DegreesToRadians(degree);
+
+            var secretFormula = new float[4, 4] {
+                { (float)Math.Cos(rads) + (float)Math.Pow(axis.X, 2) * (1 - (float)Math.Cos(rads)), axis.X* axis.Y * (1 - (float)Math.Cos(rads)) - axis.Z * (float)Math.Sin(rads),    axis.X * axis.Z * (1 - (float)Math.Cos(rads)) + axis.Y * (float)Math.Sin(rads),   0 },
+                { axis.Y * axis.X * (1 - (float)Math.Cos(rads)) + axis.Z * (float)Math.Sin(rads),   (float)Math.Cos(rads) + (float)Math.Pow(axis.Y, 2) * (1 - (float)Math.Cos(rads)), axis.Y * axis.Z * (1 - (float)Math.Cos(rads)) - axis.X * (float)Math.Sin(rads),   0 },
+                { axis.Z * axis.X * (1 - (float)Math.Cos(rads)) - axis.Y * (float)Math.Sin(rads),   axis.Z * axis.Y * (1 - (float)Math.Cos(rads)) + axis.X * (float)Math.Sin(rads),   (float)Math.Cos(rads) + (float)Math.Pow(axis.Z, 2) * (1 - (float)Math.Cos(rads)), 0 },
+                { 0, 0, 0, 1}
+            };
+            var secretFormulaMatix = new Matrix4
+            (
+                new Vector4(secretFormula[0, 0], secretFormula[0, 1], secretFormula[0, 2], secretFormula[0, 3]),
+                new Vector4(secretFormula[1, 0], secretFormula[1, 1], secretFormula[1, 2], secretFormula[1, 3]),
+                new Vector4(secretFormula[2, 0], secretFormula[2, 1], secretFormula[2, 2], secretFormula[2, 3]),
+                new Vector4(secretFormula[3, 0], secretFormula[3, 1], secretFormula[3, 2], secretFormula[3, 3])
+            );
+
+            return secretFormulaMatix;
+        }
+
+
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
