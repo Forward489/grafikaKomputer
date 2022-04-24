@@ -346,10 +346,14 @@ namespace Pertemuan1
             makeBodyPawaemon();
             makeHandPawaemon();
 
-            main_head_pawaemon.translateObject(0, 0.54f, 0);
+            main_head_pawaemon.translateObject(0, 0.7f, 0);
             bodyPawaemon.translateObject(0, -0.15f, 0);
-            //right_foot_pawaemon.translateObject(0, -0.15f, 0);
-            //left_foot_pawaemon.translateObject(0, -0.15f, 0);
+            main_head_pawaemon.translateObject(2, -0.15f, 0);
+            bodyPawaemon.translateObject(2, 0, 0);
+            right_hand_pawaemon.translateObject(2, 0, 0);
+            left_hand_pawaemon.translateObject(2, 0, 0);
+            right_foot_pawaemon.translateObject(2, 0, 0);
+            left_foot_pawaemon.translateObject(2, 0, 0);
 
             pawaemon.addChildClass(main_head_pawaemon);
             pawaemon.addChildClass(bodyPawaemon);
@@ -374,7 +378,7 @@ namespace Pertemuan1
         }
         bool plus_pawaemon = true;
         float rotate_pawaemon = 0;
-        float totalRotPawaemon = 30;
+        float totalRotPawaemon = 10;
         float rotDegPawaemon = 1;
         int left_pawaemon = 1;
         bool [] leftFootPawaemon = {true, false};
@@ -417,34 +421,34 @@ namespace Pertemuan1
             if (plus_pawaemon)
             {
                 
-                pawaemon.Child[3].rotate(pawaemon.Child[3]._center, pawaemon.Child[3]._euler[0], rotDegPawaemon);
+                pawaemon.Child[3].rotate(pawaemon.Child[3]._center, pawaemon.Child[3]._euler[1], rotDegPawaemon / 3 * -1);
                 
-                pawaemon.Child[2].rotate(pawaemon._center, pawaemon._euler[1], rotDegPawaemon * -1);
+                pawaemon.Child[2].rotate(pawaemon.Child[2]._center, pawaemon.Child[2]._euler[1], rotDegPawaemon / 3* -1);
                 if (leftFootPawaemon[left_pawaemon])
                 {
-                    pawaemon.Child[5].rotate(pawaemon._center, pawaemon._euler[0], rotDegPawaemon * -1);
-                    pawaemon.Child[0].rotate(pawaemon.Child[0]._center, pawaemon.Child[3]._euler[2], rotDegPawaemon / 3);
+                    pawaemon.Child[5].rotate(pawaemon.Child[5]._center, pawaemon.Child[5]._euler[0], rotDegPawaemon * -2);
+                    pawaemon.Child[0].rotate(pawaemon._center, pawaemon.Child[0]._euler[0], rotDegPawaemon / 4);
                 }
                 else
                 {
-                    pawaemon.Child[4].rotate(pawaemon._center, pawaemon._euler[0], rotDegPawaemon * -1);
-                    pawaemon.Child[0].rotate(pawaemon.Child[0]._center, pawaemon.Child[3]._euler[2], rotDegPawaemon / 3 * -1);
+                    pawaemon.Child[4].rotate(pawaemon.Child[4]._center, pawaemon.Child[4]._euler[0], rotDegPawaemon * -2);
+                    pawaemon.Child[0].rotate(pawaemon._center, pawaemon.Child[0]._euler[0], rotDegPawaemon / 4 * -1);
                 }
                 rotate_pawaemon += rotDegPawaemon;
             }
             else
             {
-                pawaemon.Child[3].rotate(pawaemon.Child[3]._center, pawaemon.Child[3]._euler[0], rotDegPawaemon * -1);
-                pawaemon.Child[2].rotate(pawaemon._center, pawaemon._euler[1], rotDegPawaemon);
+                pawaemon.Child[3].rotate(pawaemon.Child[3]._center, pawaemon.Child[3]._euler[1], rotDegPawaemon / 3 * 1);
+                pawaemon.Child[2].rotate(pawaemon.Child[2]._center, pawaemon.Child[2]._euler[1], rotDegPawaemon / 3);
                 if (leftFootPawaemon[left_pawaemon])
                 {
-                    pawaemon.Child[5].rotate(pawaemon._center, pawaemon._euler[0], rotDegPawaemon);
-                    pawaemon.Child[0].rotate(pawaemon.Child[0]._center, pawaemon.Child[3]._euler[2], rotDegPawaemon / 3 * -1);
+                    pawaemon.Child[5].rotate(pawaemon.Child[5]._center, pawaemon.Child[5]._euler[0], rotDegPawaemon * 2);
+                    pawaemon.Child[0].rotate(pawaemon._center, pawaemon.Child[0]._euler[0], rotDegPawaemon / 4 * -1);
                 } 
                 else
                 {
-                    pawaemon.Child[4].rotate(pawaemon._center, pawaemon._euler[0], rotDegPawaemon);
-                    pawaemon.Child[0].rotate(pawaemon.Child[0]._center, pawaemon.Child[3]._euler[2], rotDegPawaemon / 3);
+                    pawaemon.Child[4].rotate(pawaemon.Child[4]._center, pawaemon.Child[4]._euler[0], rotDegPawaemon * 2);
+                    pawaemon.Child[0].rotate(pawaemon._center, pawaemon.Child[0]._euler[0], rotDegPawaemon / 4);
                 }
                 rotate_pawaemon -= rotDegPawaemon;
             }
